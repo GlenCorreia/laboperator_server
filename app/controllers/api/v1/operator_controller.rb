@@ -35,13 +35,23 @@ class Api::V1::OperatorController < ApplicationController
 
     parsed_json = JSON.parse(open(path).read)
     output_list = []
+    device_table_data = []
     parsed_json['data'].each do |element|
+      table_data = {
+        noise: element,
+        threshold: threshold.to_i
+      }
       if element < threshold.to_i
         output_list << 0
+        table_data[:signal] = 0
       else 
         output_list << 1
+        table_data[:signal] = 1
       end
+      device_table_data << table_data
     end
+    # Persist input and output signal along with threshold value to database
+    DeviceSignal.create(device_table_data) if device_table_data.length > 0
 
     return render json: {
       signal: output_list
