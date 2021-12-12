@@ -1,6 +1,6 @@
 class Api::V1::OperatorController < ApplicationController
 
-  def clean
+  def clean_signal
     data      = params[:data] || nil
     threshold = params[:threshold] || nil
 
