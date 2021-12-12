@@ -1,0 +1,2 @@
+class DeviceSignal < ApplicationRecord
+end
