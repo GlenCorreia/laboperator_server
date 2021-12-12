@@ -1,12 +1,12 @@
 class Api::V1::OperatorController < ApplicationController
 
   def clean_signal
-    data      = params[:data] || nil
-    threshold = params[:threshold] || nil
+    data      = (params.has_key?(:data) && !params[:data].blank?) ? params[:data] : nil
+    threshold = (params.has_key?(:threshold) && !params[:threshold].blank?) ? params[:threshold] : nil
 
     if data.nil? || threshold.nil?
       return render json: {
-        message: "Please enter appropriate parameters"
+        message: "Please enter appropriate parameters."
       }, status: :bad_request
     end
 
