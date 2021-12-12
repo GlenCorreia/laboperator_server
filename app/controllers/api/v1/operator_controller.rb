@@ -23,4 +23,28 @@ class Api::V1::OperatorController < ApplicationController
       signal: output_list
     }
   end
+
+  
+  def clean_file
+    threshold = (params.has_key?(:threshold) && !params[:threshold].blank?) ? params[:threshold] : nil
+    return render json: { message: "Please enter the threshold parameter." }, status: :bad_request if threshold.nil?
+
+    file_name = "device_data.json"
+    path = File.join("#{Rails.root}/public/", "#{file_name}")
+    return render json: { message: "Device data does not exist at given location." }, status: :internal_server_error if !File.exist?(path)
+
+    parsed_json = JSON.parse(open(path).read)
+    output_list = []
+    parsed_json['data'].each do |element|
+      if element < threshold.to_i
+        output_list << 0
+      else 
+        output_list << 1
+      end
+    end
+
+    return render json: {
+      signal: output_list
+    }
+  end
 end
