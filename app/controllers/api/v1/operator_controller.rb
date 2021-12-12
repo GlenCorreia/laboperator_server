@@ -1,4 +1,4 @@
-class OperatorController < ApplicationController
+class Api::V1::OperatorController < ApplicationController
 
   def clean
     data      = params[:data] || nil
