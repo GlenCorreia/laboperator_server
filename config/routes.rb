@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   namespace 'api' do 
     namespace 'v1' do
       post 'laboperator/sanitize_signal', to: 'operator#clean_signal'
+      get  'laboperator/sanitize_file',   to: 'operator#clean_file'
     end
   end
 end
