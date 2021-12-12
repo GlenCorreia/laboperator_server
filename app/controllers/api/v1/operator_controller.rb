@@ -1,4 +1,5 @@
 class Api::V1::OperatorController < ApplicationController
+  before_action :authenticate_user!
 
   def clean_signal
     data      = (params.has_key?(:data) && !params[:data].blank?) ? params[:data] : nil
